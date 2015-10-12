@@ -1,5 +1,13 @@
 var dim;
-var img; 
+var gabbia;
+var cardellino;
+var cardellinocanto;
+
+function preload() {  // preload() runs once
+    cardellinocanto = loadSound('assets/CantoCardellinoSiciliano.mp3');
+    gabbia = loadImage("assets/stock-photo-17901185-birdcage.jpg");
+    cardellino = loadImage("assets/cardellino.jpg");
+}
 
 function setup() {
   createCanvas(1366, 768);
@@ -7,45 +15,32 @@ function setup() {
   background(0);
   colorMode(RGB, 255);
   noStroke();
-  ellipseMode(RADIUS);
+  ellipseMode(CENTER);
+  rectMode(CENTER); 
   noLoop();
-
-  //cardellino = loadSound('assets/CantoCardellinoSiciliano.mp3');
-  dama = loadImage("assets/dama.gif"); 
 }
+
 
 function draw() {
-  background(0);
-  for (var x = 0; x <= width; x+=dim) {
-    drawGradient(width/2, height/2);
-  } 
+  background(244);
   fill(255)
-  ellipse(width*0.5, height*0.5, height/3, height/3);
-  image(dama, 0, 0);
-}
-
-function drawGradient(x, y) {
-  var radius = dim/2;
-  var h = 20;
-  i=100;
-  for (var r = radius; r > 0; --r) {
-    if(h<220){
-      fill(h+120, h+120, h+120);
-    }else{
-      fill(h, h, h);
-    }
-    ellipse(x, y, r*3, r*4);
-    //ellipse(x, y, r, r);
-    h = i++/3;
-  }
+  ellipse(width*0.5, height*0.5, height/1.618, height/1.618);
+  image(cardellino, width/2-254/2, height/2-200/2, 254, 200);
 }
 
 function mousePressed() {
-  if ( song.isPlaying() ) { // .isPlaying() returns a boolean
-    song.stop();
-    background(255,0,0);
+  if ( cardellinocanto.isPlaying() ) { // .isPlaying() returns a boolean
+    cardellinocanto.stop();
+    background(0);
+    fill(255)
+    ellipse(width*0.5, height*0.5, height/1.618, height/1.618);
+    image(gabbia, width/2-370/2, height/2-556/2, 370, 556);
   } else {
-    song.play();
-    background(0,255,0);
+    background(244);
+    fill(255)
+    ellipse(width*0.5, height*0.5, height/1.618, height/1.618);
+    image(cardellino, width/2-254/2, height/2-200/2, 254, 200);
+    cardellinocanto.play();
+    hide(gabbia);
   }
 }
