@@ -5,7 +5,8 @@ var gabbia;
 var cardellino;
 var cardellinocanto;
 
-var x, y;
+var diameter; 
+var angle = 0;
 
 var hidden = true;
 var counterStart = false;
@@ -27,27 +28,17 @@ function setup() {
   rectMode(CENTER); 
   mousePressed();
   cardellinocanto.play();
-  frameRate(60);
+  frameRate(30);
 
-  x = width / 2;
-  y = height;
+  diameter = height - 10;
+  noFill();
+  stroke(255, 204, 0);
 }
 
 function draw() {
   //console.log('--', frameCount);
   background(244);
-  
-  stroke(200);
-  noFill();
-  ellipse(width*0.5, height*0.5, y, x);
-
-  x = x + random(1, 1);
-  y = y + 1;
-  
-  // Reset to the bottom
-  if (y < 0) {
-    y = height;
-  }
+  drawOnda()
 
   noStroke();
   fill(255);
@@ -73,7 +64,8 @@ function keyPressed() {
     t = setInterval( function(){ 
       //console.log('timer tick' , hidden);
       hidden = !hidden;
-      drawGabbia();    
+      drawGabbia();  
+
     }, 5);
   }  else if(key==='K') {
     on=false;
@@ -102,6 +94,11 @@ function drawGabbia() {
   }
 }
 
+function drawOnda(){
+  var d2 = 10 + (sin(angle + PI/2) * diameter/2) + diameter/2;
+  ellipse(width/2, height/2, d2, d2);
+  angle += 0.02;
+}
   // if(counterStart) {
   //  if(frameCount % 5 == 0) {
   //   hidden = !hidden;
