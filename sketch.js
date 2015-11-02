@@ -2,8 +2,10 @@
 
 var dim;
 var gabbia;
+var gabbiacanto;
 var cardellino;
 var cardellinocanto;
+var dama;
 
 var diameter; 
 var angle = 0;
@@ -13,9 +15,11 @@ var counterStart = false;
 var on = true;
 
 function preload() {
+    cardellino = loadImage("assets/cardellino.png");
     cardellinocanto = loadSound('assets/CantoCardellinoSiciliano.mp3');
     gabbia = loadImage("assets/gabbia.png");
-    cardellino = loadImage("assets/cardellino.png");
+    gabbiacanto = loadSound('assets/traffico.mp3');
+    dama = createVideo(['assets/dama.mov']);
 }
 
 function setup() {
@@ -62,7 +66,7 @@ var num = 8;
 var diametro;
 
 function mousePressed() {
-  cardellinocanto.stop  ();
+  cardellinocanto.stop();
   clearInterval(t);
 }
 
@@ -70,6 +74,7 @@ function keyPressed() {
   if(key==="A"){
     on=true;
     cardellinocanto.stop();
+    gabbiacanto.play()
     hidden = !hidden;
     console.log(key);
     drawGabbia();
@@ -83,9 +88,14 @@ function keyPressed() {
   }  else if(key==='K') {
     on=false;
     cardellinocanto.play();
+    gabbiacanto.stop()
     console.log(key);
     clearInterval(t);
     hidden = true;
+  }else if(key==='D') {
+    on=false;
+    //fingers.loop();
+    console.log(key);
   };
 }
 
@@ -100,18 +110,28 @@ function drawGabbia() {
       ellipse(width*0.5, height*0.5, height/1.618, height/1.618);
       image(cardellino, width/2-260/2-40, height/2-400/2+60, 260, 400);
     }
-  }else{
+  }/*else{
     fill(255)
     ellipse(width*0.5, height*0.5, height/1.618, height/1.618);
-    image(cardellino, width/2-260/2-40, height/2-400/2+60, 260, 400);
-  }
+    image(dama, width/2-260/2-40, height/2-400/2+60, 260, 400);
+  }*/
 }
 
 function drawOnda(){
   noFill();
-  var d2 = 10 + (sin(angle + PI/2) * diameter/2) + diameter/2;
-  ellipse(width/2, height/2, d2, d2);
-  angle += 0.02;
+  if(d2>10){
+    var d2 = 10 + (sin(angle + PI/2) * diameter/2) + diameter/2;
+    fill(255, 0, 0);
+    ellipse(width/2, height/2, d2, d2);
+    console.log(diameter);
+  }else{
+    var d2 = 10 + (sin(angle + PI/2) * diameter/2) + diameter/2;
+    noFill();
+    ellipse(width/2, height/2, d2, d2);
+    console.log(diameter);
+  }
+  //ellipse(width/2, height/2, d2, d2);
+  angle += 0.05;
 }
   // if(counterStart) {
   //  if(frameCount % 5 == 0) {
